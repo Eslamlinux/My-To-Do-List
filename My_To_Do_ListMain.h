@@ -32,6 +32,8 @@ class My_To_Do_ListFrame: public wxFrame
         //(*Handlers(My_To_Do_ListFrame)
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
+        void OnButton1Click(wxCommandEvent& event);
+        void OnButton2Click(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(My_To_Do_ListFrame)

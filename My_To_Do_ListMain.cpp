@@ -81,9 +81,9 @@ My_To_Do_ListFrame::My_To_Do_ListFrame(wxWindow* parent,wxWindowID id)
     TextCtrl1 = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     BoxSizer1->Add(TextCtrl1, 1, wxALL|wxEXPAND, 5);
     BoxSizer3 = new wxBoxSizer(wxHORIZONTAL);
-    Button1 = new wxButton(this, ID_BUTTON1, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    Button1 = new wxButton(this, ID_BUTTON1, _("Add "), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
     BoxSizer3->Add(Button1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Button2 = new wxButton(this, ID_BUTTON2, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    Button2 = new wxButton(this, ID_BUTTON2, _("Edit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
     BoxSizer3->Add(Button2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1->Add(BoxSizer3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticBoxSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_TOP, 5);
@@ -107,6 +107,8 @@ My_To_Do_ListFrame::My_To_Do_ListFrame(wxWindow* parent,wxWindowID id)
     SetStatusBar(StatusBar1);
     GridSizer1->SetSizeHints(this);
 
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton1Click);
+    Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton2Click);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnAbout);
     //*)
@@ -125,6 +127,19 @@ void My_To_Do_ListFrame::OnQuit(wxCommandEvent& event)
 
 void My_To_Do_ListFrame::OnAbout(wxCommandEvent& event)
 {
-    wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(msg, _("Welcome to..."));
+    wxString msg = "welcome to MY To Do List ,Free and easy software\nMade with Love By Eslam Linux";
+    wxMessageBox(msg, _("About..."));
+}
+int Counter =0;
+
+void My_To_Do_ListFrame::OnButton1Click(wxCommandEvent& event)
+{
+    Counter++;
+    ListBox1->AppendString(std::to_string(Counter) + " " + TextCtrl1->GetValue());
+}
+
+void My_To_Do_ListFrame::OnButton2Click(wxCommandEvent& event)
+{
+    int The_Item_Num = ListBox1->GetSelection();
+    ListBox1->SetString(The_Item_Num,std::to_string(The_Item_Num +1) + " " + TextCtrl1->GetValue());
 }
