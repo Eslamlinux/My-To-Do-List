@@ -134,12 +134,22 @@ int Counter =0;
 
 void My_To_Do_ListFrame::OnButton1Click(wxCommandEvent& event)
 {
+    if(!TextCtrl1->GetValue().empty()){
     Counter++;
     ListBox1->AppendString(std::to_string(Counter) + " " + TextCtrl1->GetValue());
+    }
+    else{
+        wxMessageBox("the text box cant be empty!!!");
+    }
 }
 
 void My_To_Do_ListFrame::OnButton2Click(wxCommandEvent& event)
 {
+    if(!TextCtrl1->GetValue().empty()){
     int The_Item_Num = ListBox1->GetSelection();
     ListBox1->SetString(The_Item_Num,std::to_string(The_Item_Num +1) + " " + TextCtrl1->GetValue());
+    }
+    else{
+        wxMessageBox("the text box cant be empty!!!");
+    }
 }
