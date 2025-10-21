@@ -47,6 +47,7 @@ const long My_To_Do_ListFrame::ID_TEXTCTRL1 = wxNewId();
 const long My_To_Do_ListFrame::ID_BUTTON1 = wxNewId();
 const long My_To_Do_ListFrame::ID_BUTTON2 = wxNewId();
 const long My_To_Do_ListFrame::ID_BUTTON3 = wxNewId();
+const long My_To_Do_ListFrame::ID_BUTTON4 = wxNewId();
 const long My_To_Do_ListFrame::idMenuQuit = wxNewId();
 const long My_To_Do_ListFrame::idMenuAbout = wxNewId();
 const long My_To_Do_ListFrame::ID_STATUSBAR1 = wxNewId();
@@ -76,7 +77,7 @@ My_To_Do_ListFrame::My_To_Do_ListFrame(wxWindow* parent,wxWindowID id)
     StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, _("To Do List"));
     BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
     ListBox1 = new wxListBox(this, ID_LISTBOX1, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX1"));
-    BoxSizer2->Add(ListBox1, 1, wxALL|wxEXPAND, 5);
+    BoxSizer2->Add(ListBox1, 1, wxTOP|wxBOTTOM|wxRIGHT|wxEXPAND, 5);
     StaticBoxSizer1->Add(BoxSizer2, 1, wxALL|wxEXPAND, 5);
     BoxSizer1 = new wxBoxSizer(wxVERTICAL);
     TextCtrl1 = new wxTextCtrl(this, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
@@ -88,6 +89,8 @@ My_To_Do_ListFrame::My_To_Do_ListFrame(wxWindow* parent,wxWindowID id)
     BoxSizer3->Add(Button2, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     Button3 = new wxButton(this, ID_BUTTON3, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
     BoxSizer3->Add(Button3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    Button4 = new wxButton(this, ID_BUTTON4, _("Select All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    BoxSizer3->Add(Button4, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizer1->Add(BoxSizer3, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     StaticBoxSizer1->Add(BoxSizer1, 1, wxALL|wxALIGN_TOP, 5);
     GridSizer1->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
@@ -114,6 +117,7 @@ My_To_Do_ListFrame::My_To_Do_ListFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton1Click);
     Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton2Click);
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton3Click);
+    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnButton4Click);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&My_To_Do_ListFrame::OnAbout);
     //*)
@@ -135,19 +139,23 @@ void My_To_Do_ListFrame::OnAbout(wxCommandEvent& event)
     wxString msg = "welcome to MY To Do List ,Free and easy software\nMade with Love By Eslam Linux";
     wxMessageBox(msg, _("About..."));
 }
-int Counter =0;
 
+
+
+// Add func
 void My_To_Do_ListFrame::OnButton1Click(wxCommandEvent& event)
 {
+    int Counter = ListBox1->GetCount() ;
     if(!TextCtrl1->GetValue().empty()){
-    Counter++;
-    ListBox1->AppendString(std::to_string(Counter) + " " + TextCtrl1->GetValue());
+    //Counter++;
+    ListBox1->AppendString(std::to_string(Counter+1) + " " + TextCtrl1->GetValue());
     }
     else{
         wxMessageBox("the text box cant be empty!!!");
     }
 }
 
+// Edit func
 void My_To_Do_ListFrame::OnButton2Click(wxCommandEvent& event)
 {
     if(!TextCtrl1->GetValue().empty()){
@@ -162,17 +170,26 @@ void My_To_Do_ListFrame::OnButton2Click(wxCommandEvent& event)
     }
 }
 
+// deselect func
 void My_To_Do_ListFrame::OnListBox1Select(wxCommandEvent& event)
 {
     int The_Item_Num = ListBox1->GetSelection();
     ListBox1->Deselect(The_Item_Num);
 }
 
+// delete func
 void My_To_Do_ListFrame::OnButton3Click(wxCommandEvent& event)
 {
     int The_Item_Num = ListBox1->GetSelection();
-    if(The_Item_Num >= 0)
+    if(The_Item_Num >= 0){
     ListBox1->Delete(The_Item_Num);
+    }
     else
         wxMessageBox("You Must Select One Item To Delete It");
+}
+
+//select all
+void My_To_Do_ListFrame::OnButton4Click(wxCommandEvent& event)
+{
+ListBox1->Refresh();
 }

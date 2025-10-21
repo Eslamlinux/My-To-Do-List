@@ -36,6 +36,7 @@ class My_To_Do_ListFrame: public wxFrame
         void OnButton2Click(wxCommandEvent& event);
         void OnListBox1Select(wxCommandEvent& event);
         void OnButton3Click(wxCommandEvent& event);
+        void OnButton4Click(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(My_To_Do_ListFrame)
@@ -44,6 +45,7 @@ class My_To_Do_ListFrame: public wxFrame
         static const long ID_BUTTON1;
         static const long ID_BUTTON2;
         static const long ID_BUTTON3;
+        static const long ID_BUTTON4;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
@@ -53,6 +55,7 @@ class My_To_Do_ListFrame: public wxFrame
         wxButton* Button1;
         wxButton* Button2;
         wxButton* Button3;
+        wxButton* Button4;
         wxListBox* ListBox1;
         wxStatusBar* StatusBar1;
         wxTextCtrl* TextCtrl1;
